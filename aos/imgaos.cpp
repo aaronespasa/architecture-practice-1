@@ -8,11 +8,15 @@
 int main () {
     ImageAOS imgaos;
 
-    std::vector<Pixel> pixelsData = imgaos.ReadBitmapFile("../images/amphora.bmp");
+    imgaos.ReadBitmapFile("../images/amphora.bmp");
 
-    for(int i = 0; i < 5; i++) {
-        std::cout << "Pixel " << i << ": " << std::to_string(pixelsData[i].red) << " " << std::to_string(pixelsData[i].green) << " " << std::to_string(pixelsData[i].blue) << std::endl;
+    BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
+
+    for (int i = 0; i < 5; i++) {
+        std::cout << "Pixel " << i << ": " << std::to_string(bmpPixelsData[0][i].red) << " " << std::to_string(bmpPixelsData[0][i].green) << " " << std::to_string(bmpPixelsData[0][i].blue) << std::endl;
     }
+
+    imgaos.WriteBitmapFile("../images/amphora-new.bmp");
 
     return 0;
 }

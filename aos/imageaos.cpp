@@ -2,11 +2,12 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <stdint.h>
 
 #include "aos.h"
 #include "../common/common.h"
 
-std::vector<Pixel> ImageAOS::ReadBitmapFile(std::string filename) {
+void ImageAOS::ReadBitmapFile(std::string filename) {
     // Create a file-reading object to read the bitmap file
     std::ifstream bmpFile(filename.c_str(), std::ios::in | std::ios::binary);
 
@@ -57,25 +58,90 @@ std::vector<Pixel> ImageAOS::ReadBitmapFile(std::string filename) {
     /*
      * 2. Read the bitmap pixels and store them in a vector of pixels
      */
-    bmpFile.seekg(bmpFileHeader.offset_data, std::ios::beg);
+    bmpFile.seekg(bmpFileHeader.offset_data);
 
-    // Create a vector of pixels
-    std::vector<Pixel> bmpPixelsData(bmpInfoHeader.height);
-
-    // Read the pixels from the bitmap file
-    Pixel pixel;
+    // Iterate over the rows of the bitmap
     for (int i = 0; i < bmpInfoHeader.height; i++) {
-        bmpFile.read((char *)&pixel, sizeof(pixel));
+        // Create a vector of pixels for each row
+        std::vector<Pixel> bmpPixelsRowData(bmpInfoHeader.width);
+
+        // Fill the vector with the pixels of the row
+        for(int j = 0; j < bmpInfoHeader.width; j++) {
+            Pixel pixel;
+            bmpFile.read((char *) &pixel, sizeof(Pixel));
+            
+            bmpPixelsRowData[j] = pixel;
+        }
+
+        // Skip the padding bytes. Each row must be a multiple of 4 bytes.
+        bmpFile.seekg(bmpInfoHeader.width % 4, std::ios_base::cur);
 
         // Store the pixel in the vector
-        bmpPixelsData[i] = pixel;
+        bmpPixelsData.push_back(bmpPixelsRowData);
     }
 
     /*
      * 3. Close the file and return the vector of pixels
      */
     bmpFile.close();
+}
 
+void ImageAOS::WriteBitmapFile(std::string filename) {
+    // Create a file-writing object to write the bitmap file
+    std::ofstream bmpFile(filename.c_str(), std::ios::out | std::ios::binary);
+
+    /*
+     * 1. Write the bitmap file header
+     */
+    BMPFileHeader bmpFileHeader;
+    bmpFileHeader.type = 0x4D42;
+    bmpFileHeader.size = 54 + bmpPixelsData.size() * bmpPixelsData[0].size() * 3;
+    bmpFileHeader.reserved = 0;
+    bmpFileHeader.offset_data = 54;
+
+    bmpFile.write((char *) &bmpFileHeader, sizeof(BMPFileHeader));
+
+    /*
+     * 2. Write the bitmap info header
+     */
+    BMPInfoHeader bmpInfoHeader;
+    bmpInfoHeader.size = 40;
+    bmpInfoHeader.width = bmpPixelsData[0].size();
+    bmpInfoHeader.height = bmpPixelsData.size();
+    bmpInfoHeader.planes_count = 1;
+    bmpInfoHeader.bits_per_pixel = 24;
+    bmpInfoHeader.compression = 0;
+    bmpInfoHeader.img_size = bmpPixelsData.size() * bmpPixelsData[0].size() * 3;
+    bmpInfoHeader.x_pixels_per_meter = 0;
+    bmpInfoHeader.y_pixels_per_meter = 0;
+    bmpInfoHeader.colors_used = 0;
+    bmpInfoHeader.colors_important = 0;
+
+    bmpFile.write((char *) &bmpInfoHeader, sizeof(BMPInfoHeader));
+
+    /*
+     * 3. Write the bitmap pixels
+     */
+    // Iterate over the rows of the bitmap
+    for (int i = 0; i < bmpInfoHeader.height; i++) {
+        // Write the pixels of the row
+        for(int j = 0; j < bmpInfoHeader.width; j++) {
+            bmpFile.write((char *) &bmpPixelsData[i][j], sizeof(Pixel));
+        }
+
+        // Write the padding bytes. Each row must be a multiple of 4 bytes.
+        int padding = bmpInfoHeader.width % 4;
+        for (int j = 0; j < padding; j++) {
+            bmpFile.write((char *) &padding, 1);
+        }
+    }
+
+    /*
+     * 4. Close the file
+     */
+    bmpFile.close();
+}
+
+BmpPixels ImageAOS::GetBitmapPixelsData() {
     return bmpPixelsData;
 }
-    

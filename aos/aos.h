@@ -3,12 +3,22 @@
 
 #include <string>
 #include <vector>
+#include <stdint.h>
 
 #include "../common/common.h"
 
+using namespace std;
+
+typedef vector<vector<Pixel>> BmpPixels;
+
 class ImageAOS {
     public:
-        std::vector<Pixel> ReadBitmapFile(std::string filename);
+        void ReadBitmapFile(string filename);
+        void WriteBitmapFile(string filename);
+
+        BmpPixels GetBitmapPixelsData();
+    private:
+        BmpPixels bmpPixelsData;
 };
 
 

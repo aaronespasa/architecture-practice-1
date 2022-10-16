@@ -7,6 +7,7 @@
 #include "aos.h"
 #include "../common/common.h"
 
+
 void ImageAOS::ReadBitmapFile(std::string filename) {
     // Create a file-reading object to read the bitmap file
     std::ifstream bmpFile(filename.c_str(), std::ios::in | std::ios::binary);

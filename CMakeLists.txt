@@ -9,7 +9,7 @@ add_compile_options(-Wall -Wextra -Werror -pedantic -pedantic-errors)
 set(CMAKE_CXX_FLAGS_RELEASE "-march=native")
 
 add_library(common common/progargs.cpp)
-add_library(aos aos/imageaos.cpp aos/imgaos.cpp)
+add_library(aos aos/imageaos.cpp aos/imgaos.cpp aos/histogramaos.cpp aos/grayscaleaos.cpp aos/gaussianbluraos.cpp)
 add_library(soa soa/imagesoa.cpp soa/imgsoa.cpp)
 
 # Create the AOS executable (imgaos) linking the libraries common & aos

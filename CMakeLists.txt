@@ -16,6 +16,14 @@ add_library(soa soa/imagesoa.cpp soa/imgsoa.cpp)
 add_executable(imgaos aos/imgaos.cpp)
 target_link_libraries (imgaos common aos)
 
+# Create the Test executable (test) linking the libraries common & aos
+add_executable(testaos test/testaos.cpp)
+target_link_libraries (testaos common aos)
+
 # Create the SOA executable (imgsoa) linking the libraries common & soa
 add_executable(imgsoa soa/imgsoa.cpp)
 target_link_libraries (imgsoa common soa)
+
+# Create the Test executable (test) linking the libraries common & soa
+add_executable(testsoa test/testsoa.cpp)
+target_link_libraries(testsoa common soa)

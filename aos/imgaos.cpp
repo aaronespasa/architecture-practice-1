@@ -17,6 +17,6 @@ int main () {
     }
 
     imgaos.WriteBitmapFile("../images/amphora-new.bmp");
-
+    imgaos.ApplyGaussianBlur("../images/amphora.bmp");
     return 0;
 }

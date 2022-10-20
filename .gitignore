@@ -1,5 +1,7 @@
-# Visual Studio Code
+# Visual Studio Code & CLion
 .vscode/
+.idea/
+cmake-build-debug/
 
 # Build folder
 build/

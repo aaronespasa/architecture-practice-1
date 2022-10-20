@@ -10,13 +10,15 @@ int main () {
 
     imgaos.ReadBitmapFile("../images/amphora.bmp");
 
+    imgaos.ToGrayScale();
+
     BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
 
     for (int i = 0; i < 5; i++) {
         std::cout << "Pixel " << i << ": " << std::to_string(bmpPixelsData[0][i].red) << " " << std::to_string(bmpPixelsData[0][i].green) << " " << std::to_string(bmpPixelsData[0][i].blue) << std::endl;
     }
 
-    imgaos.WriteBitmapFile("../images/amphora-new.bmp");
-    imgaos.ApplyGaussianBlur("../images/amphora.bmp");
+    imgaos.WriteBitmapFile("../images/amphora-gray.bmp");
+
     return 0;
 }

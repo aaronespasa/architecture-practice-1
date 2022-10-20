@@ -18,9 +18,9 @@ struct PixelNormalized {
 PixelNormalized Normalize( Pixel& mypixel  ) {
     PixelNormalized pixelNormalized;
 
-    pixelNormalized.blue = mypixel.blue / 255;
-    pixelNormalized.green = mypixel.green / 255;
-    pixelNormalized.red = mypixel.red / 255;
+    pixelNormalized.blue = mypixel.blue / 255.0;
+    pixelNormalized.green = mypixel.green / 255.0;
+    pixelNormalized.red = mypixel.red / 255.0;
 
     return pixelNormalized;
 }
@@ -87,8 +87,8 @@ void ImageAOS::ToGrayScale() {
     vector<vector<PixelNormalized>> bmpPixelsDataNormalized(bmpPixelsData.size(), vector<PixelNormalized>(bmpPixelsData[0].size()));
 
     //Read all pixels and convert them to grayscale
-    for (int i = 0; i < bmpPixelsData.size(); i++) {
-        for (int j = 0; j < bmpPixelsData[0].size(); j++) {
+    for (long unsigned int i = 0; i < bmpPixelsData.size(); i++) {
+        for (long unsigned int j = 0; j < bmpPixelsData[0].size(); j++) {
             //asign result of  Normalize to bmpPixelsData[i][j]
             bmpPixelsDataNormalized[i][j] = Normalize(bmpPixelsData[i][j]);
             bmpPixelsDataNormalized[i][j] = Intensidad_lineal(bmpPixelsDataNormalized[i][j]);

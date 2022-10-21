@@ -1,23 +1,55 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
+#include <stdint.h>
 #include "../common/common.h"
 #include "aos.h"
 
-ImageAOS imgaos;
 
-void ImageAOS::ApplyGaussianBlur(string filename) {
-    std::cout << "Applying Gaussian Blur to AOS image:" <<filename << std::endl;
-    imgaos.ReadBitmapFile("../images/amphora.bmp");;
+using namespace std;
 
-    int len_row = sizeof(bmpPixelsData)/sizeof(bmpPixelsData[0]);
-    int len_col = sizeof(bmpPixelsData[0])/sizeof(bmpPixelsData[0][0]);
 
-    for(int i = 0; i < len_row ;i++){
-        for(int j = 0; j < len_col;j++){
-            std::cout << "Pixel [" << i << "]["<< j <<"]: " << std::to_string(bmpPixelsData[i][j].red) << std::endl;
+void ImageAOS::ApplyGaussianBlur() {
+    uint8_t kernel[5][5] = {
+        {1, 4, 7, 4, 1},
+        {4, 16, 26, 16, 4},
+        {7, 26, 41, 26, 7},
+        {4, 16, 26, 16, 4},
+        {1, 4, 7, 4, 1}
+    };
+
+    float w = 273.0;
+
+    // 1. Copy the original image (bmpPixelsData) to a new image called temporalPixelsForConvolution &
+    //    resize temporalPixelsForConvolution to be 4 pixels bigger in each side and fill it with 0s.
+    vector<vector<Pixel>> temporalPixelsForConvolution(bmpPixelsData.size() + 4, vector<Pixel>(bmpPixelsData[0].size() + 4));
+
+    for (long unsigned int i = 0; i < bmpPixelsData.size(); i++)
+        for (long unsigned int j = 0; j < bmpPixelsData[0].size(); j++)
+            temporalPixelsForConvolution[i + 2][j + 2] = bmpPixelsData[i][j];
+
+    // 2. Iterate over the temporalPixelsForConvolution starting: i = 2, j = 2
+    //    and ending: i = temporalPixelsForConvolution.size() - 2, j = temporalPixelsForConvolution[0].size() - 2
+    for(long unsigned int i = 2; i < temporalPixelsForConvolution.size() - 2; i++){
+        for(long unsigned int j = 2; j < temporalPixelsForConvolution[0].size() - 2;j++){
+            // 3. For each pixel, apply the convolution operation and store the result in the original image (bmpPixelsData)
+            // store it in bmpPixelsData[i-2][j-2]
+            int blue = 0, green = 0, red = 0;
+            for(int8_t s = -2; s < 3; s++){
+                for(int8_t t = -2; t < 3; t++){
+                    blue += temporalPixelsForConvolution[i+s][j+t].blue * kernel[s+2][t+2];
+                    green += temporalPixelsForConvolution[i+s][j+t].green * kernel[s+2][t+2];
+                    red += temporalPixelsForConvolution[i+s][j+t].red * kernel[s+2][t+2];
+                }
+            }
+            bmpPixelsData[i-2][j-2].blue = floor(blue/w + 0.5);
+            bmpPixelsData[i-2][j-2].green = floor(green/w + 0.5);
+            bmpPixelsData[i-2][j-2].red = floor(red/w + 0.5);
         }
     }
 
 
+
 }
+

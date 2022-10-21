@@ -17,7 +17,7 @@ class ImageAOS {
         void WriteBitmapFile(string filename);
         void GenerateHistogram(string filename);
         void ToGrayScale();
-        void ApplyGaussianBlur(string filename);
+        void ApplyGaussianBlur();
 
         BmpPixels GetBitmapPixelsData();
     private:

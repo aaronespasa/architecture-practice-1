@@ -18,9 +18,9 @@ struct PixelNormalized {
 PixelNormalized Normalize( Pixel& mypixel  ) {
     PixelNormalized pixelNormalized;
 
-    pixelNormalized.blue = mypixel.blue / 255;
-    pixelNormalized.green = mypixel.green / 255;
-    pixelNormalized.red = mypixel.red / 255;
+    pixelNormalized.blue = mypixel.blue / 255.0;
+    pixelNormalized.green = mypixel.green / 255.0;
+    pixelNormalized.red = mypixel.red / 255.0;
 
     return pixelNormalized;
 }

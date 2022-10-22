@@ -9,18 +9,26 @@
 
 using namespace std;
 
+struct Pixel {
+    uint8_t blue;
+    uint8_t green;
+    uint8_t red;
+};
+
 typedef vector<vector<Pixel>> BmpPixels;
 
 class ImageAOS {
     public:
         void ReadBitmapFile(string filename);
         void WriteBitmapFile(string filename);
-        void GenerateHistogram(string filename);
+        void GenerateHistogram();
         void ToGrayScale();
         void ApplyGaussianBlur();
 
         BmpPixels GetBitmapPixelsData();
     private:
+        BMPFileHeader bmpFileHeader;
+        BMPInfoHeader bmpInfoHeader;
         BmpPixels bmpPixelsData;
 };
 

@@ -26,10 +26,4 @@ struct BMPInfoHeader {
     uint32_t colors_important{0};        
 };
 
-struct Pixel {
-    uint8_t blue;
-    uint8_t green;
-    uint8_t red;
-};
-
 #endif

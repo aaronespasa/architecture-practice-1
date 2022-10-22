@@ -8,17 +8,18 @@
 int main () {
     ImageAOS imgaos;
 
-    imgaos.ReadBitmapFile("../images/landscape.bmp");
-    imgaos.ApplyGaussianBlur();
+    imgaos.ReadBitmapFile("../images/balloon.bmp");
+    // imgaos.GenerateHistogram();
     // imgaos.ToGrayScale();
+    imgaos.ApplyGaussianBlur();
 
-    BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
+    // BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
 
-    for (int i = 0; i < 5; i++) {
-        std::cout << "Pixel " << i << ": " << std::to_string(bmpPixelsData[0][i].red) << " " << std::to_string(bmpPixelsData[0][i].green) << " " << std::to_string(bmpPixelsData[0][i].blue) << std::endl;
-    }
+    // for (int i = 0; i < 5; i++) {
+    //     std::cout << "Pixel " << i << ": " << std::to_string(bmpPixelsData[0][i].red) << " " << std::to_string(bmpPixelsData[0][i].green) << " " << std::to_string(bmpPixelsData[0][i].blue) << std::endl;
+    // }
 
-    imgaos.WriteBitmapFile("../images/landscape-blur.bmp");
+    imgaos.WriteBitmapFile("../images/balloon-blur.bmp");
 
     return 0;
 }

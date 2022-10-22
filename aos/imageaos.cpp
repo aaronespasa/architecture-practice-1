@@ -26,7 +26,6 @@ void ImageAOS::ReadBitmapFile(std::string filename) {
     }
 
     // Read the bitmap file header
-    BMPFileHeader bmpFileHeader;
     bmpFile.read((char *) &bmpFileHeader, sizeof(BMPFileHeader));
 
     // Check if the file is a bitmap file
@@ -35,7 +34,6 @@ void ImageAOS::ReadBitmapFile(std::string filename) {
     }
 
     // Read the bitmap info header
-    BMPInfoHeader bmpInfoHeader;
     bmpFile.read((char *) &bmpInfoHeader, sizeof(BMPInfoHeader));
 
     // Check the number of planes
@@ -91,37 +89,15 @@ void ImageAOS::WriteBitmapFile(std::string filename) {
     std::ofstream bmpFile(filename.c_str(), std::ios::out | std::ios::binary);
 
     /*
-     * 1. Write the bitmap file header
+     * 1. Write the bitmap file header and info header
      */
-    BMPFileHeader bmpFileHeader;
-    bmpFileHeader.type = 0x4D42;
-    bmpFileHeader.size = 54 + bmpPixelsData.size() * bmpPixelsData[0].size() * 3;
-    bmpFileHeader.reserved = 0;
-    bmpFileHeader.offset_data = 54;
-
     bmpFile.write((char *) &bmpFileHeader, sizeof(BMPFileHeader));
-
-    /*
-     * 2. Write the bitmap info header
-     */
-    BMPInfoHeader bmpInfoHeader;
-    bmpInfoHeader.size = 40;
-    bmpInfoHeader.width = bmpPixelsData[0].size();
-    bmpInfoHeader.height = bmpPixelsData.size();
-    bmpInfoHeader.planes_count = 1;
-    bmpInfoHeader.bits_per_pixel = 24;
-    bmpInfoHeader.compression = 0;
-    bmpInfoHeader.img_size = bmpPixelsData.size() * bmpPixelsData[0].size() * 3;
-    bmpInfoHeader.x_pixels_per_meter = 0;
-    bmpInfoHeader.y_pixels_per_meter = 0;
-    bmpInfoHeader.colors_used = 0;
-    bmpInfoHeader.colors_important = 0;
-
     bmpFile.write((char *) &bmpInfoHeader, sizeof(BMPInfoHeader));
 
     /*
-     * 3. Write the bitmap pixels
+     * 2. Write the bitmap pixels
      */
+    bmpFile.seekp(bmpFileHeader.offset_data);
     // Iterate over the rows of the bitmap
     for (int i = 0; i < bmpInfoHeader.height; i++) {
         // Write the pixels of the row

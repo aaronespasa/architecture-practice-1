@@ -31,8 +31,8 @@ void ImageAOS::ApplyGaussianBlur() {
 
     // 2. Iterate over the temporalPixelsForConvolution starting: i = 2, j = 2
     //    and ending: i = temporalPixelsForConvolution.size() - 2, j = temporalPixelsForConvolution[0].size() - 2
-    for(long unsigned int i = 2; i < temporalPixelsForConvolution.size() - 2; i++){
-        for(long unsigned int j = 2; j < temporalPixelsForConvolution[0].size() - 2;j++){
+    for(long unsigned int i = 2; i < bmpPixelsData.size() + 2; i++){
+        for(long unsigned int j = 2; j < bmpPixelsData[0].size() + 2;j++){
             // 3. For each pixel, apply the convolution operation and store the result in the original image (bmpPixelsData)
             // store it in bmpPixelsData[i-2][j-2]
             int blue = 0, green = 0, red = 0;
@@ -49,7 +49,4 @@ void ImageAOS::ApplyGaussianBlur() {
         }
     }
 
-
-
 }
-

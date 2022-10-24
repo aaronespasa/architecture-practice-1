@@ -8,22 +8,22 @@ add_compile_options(-Wall -Wextra -Werror -pedantic -pedantic-errors)
 
 set(CMAKE_CXX_FLAGS_RELEASE "-march=native")
 
-add_library(common common/progargs.cpp)
-add_library(aos aos/imageaos.cpp aos/imgaos.cpp aos/histogramaos.cpp aos/grayscaleaos.cpp aos/gaussianbluraos.cpp)
-add_library(soa soa/imagesoa.cpp soa/imgsoa.cpp)
+add_library(common common/common.cpp common/progargs.cpp)
+add_library(aos aos/imageaos.cpp aos/imgaos.cpp aos/histogram.cpp aos/grayscale.cpp aos/gaussianblur.cpp)
+add_library(soa soa/imagesoa.cpp soa/imgsoa.cpp soa/histogram.cpp soa/grayscale.cpp soa/gaussianblur.cpp)
 
 # Create the AOS executable (imgaos) linking the libraries common & aos
 add_executable(imgaos aos/imgaos.cpp)
-target_link_libraries (imgaos common aos)
+target_link_libraries (imgaos aos common)
 
 # Create the Test executable (test) linking the libraries common & aos
 add_executable(testaos test/testaos.cpp)
-target_link_libraries (testaos common aos)
+target_link_libraries (testaos aos common)
 
 # Create the SOA executable (imgsoa) linking the libraries common & soa
 add_executable(imgsoa soa/imgsoa.cpp)
-target_link_libraries (imgsoa common soa)
+target_link_libraries (imgsoa soa common)
 
 # Create the Test executable (test) linking the libraries common & soa
 add_executable(testsoa test/testsoa.cpp)
-target_link_libraries(testsoa common soa)
+target_link_libraries(testsoa soa common)

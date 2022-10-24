@@ -27,8 +27,7 @@ class ImageAOS {
 
         BmpPixels GetBitmapPixelsData();
     private:
-        BMPFileHeader bmpFileHeader;
-        BMPInfoHeader bmpInfoHeader;
+        BMPHeader bmpHeader;
         BmpPixels bmpPixelsData;
 };
 

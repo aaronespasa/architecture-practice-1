@@ -80,3 +80,12 @@ void ImageSOA::WriteBitmapFile(std::string filename) {
     /* 3. Close the file */
     bmpFile.close();
 }
+
+void ImageSOA::CopyBitmapFile(string source, string destination) {
+    ReadBitmapFile(source);
+    WriteBitmapFile(destination);
+}
+
+BmpPixels ImageSOA::GetBitmapPixelsData() {
+    return bmpPixelsData;
+}

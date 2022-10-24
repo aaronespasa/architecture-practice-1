@@ -19,6 +19,7 @@ class ImageSOA {
     public:
         void ReadBitmapFile(string filename);
         void WriteBitmapFile(string filename);
+        void CopyBitmapFile(string source, string destination);
         void GenerateHistogram(string filename);
         void ToGrayScale();
         void ApplyGaussianBlur();

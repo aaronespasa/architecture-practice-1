@@ -72,6 +72,11 @@ void ImageAOS::WriteBitmapFile(std::string filename) {
     bmpFile.close();
 }
 
+void ImageAOS::CopyBitmapFile(string source, string destination) {
+    ReadBitmapFile(source);
+    WriteBitmapFile(destination);
+}
+
 BmpPixels ImageAOS::GetBitmapPixelsData() {
     return bmpPixelsData;
 }

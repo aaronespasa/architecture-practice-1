@@ -4,10 +4,8 @@
 int main() {
     ImageSOA imgsoa;
 
-    imgsoa.ReadBitmapFile("../images/balloon.bmp");
+    imgsoa.CopyBitmapFile("../images/balloon.bmp", "../images/balloon_copy.bmp");
     // imgsoa.ToGrayScale();
-
-    imgsoa.WriteBitmapFile("../images/balloonsoa.bmp");
 
     return 0;
 }

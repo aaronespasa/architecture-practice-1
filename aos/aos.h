@@ -21,7 +21,7 @@ class ImageAOS {
     public:
         void ReadBitmapFile(string filename);
         void WriteBitmapFile(string filename);
-        void GenerateHistogram();
+        void GenerateHistogram(string filename);
         void ToGrayScale();
         void ApplyGaussianBlur();
 

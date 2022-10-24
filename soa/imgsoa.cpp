@@ -2,6 +2,10 @@
 #include "soa.h"
 
 int main() {
-    std::cout << "Image SOA" << std::endl;
+    ImageSOA imgsoa;
+
+    imgsoa.CopyBitmapFile("../images/balloon.bmp", "../images/balloon_copy.bmp");
+    // imgsoa.ToGrayScale();
+
     return 0;
 }

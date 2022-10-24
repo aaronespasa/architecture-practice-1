@@ -21,14 +21,14 @@ class ImageAOS {
     public:
         void ReadBitmapFile(string filename);
         void WriteBitmapFile(string filename);
+        void CopyBitmapFile(string source, string destination);
         void GenerateHistogram(string filename);
         void ToGrayScale();
         void ApplyGaussianBlur();
 
         BmpPixels GetBitmapPixelsData();
     private:
-        BMPFileHeader bmpFileHeader;
-        BMPInfoHeader bmpInfoHeader;
+        BMPHeader bmpHeader;
         BmpPixels bmpPixelsData;
 };
 

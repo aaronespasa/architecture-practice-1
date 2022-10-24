@@ -9,9 +9,9 @@ int main () {
     ImageAOS imgaos;
 
     imgaos.ReadBitmapFile("../images/balloon.bmp");
-    // imgaos.GenerateHistogram();
+    imgaos.GenerateHistogram("../histograms/ballon.hst");
     // imgaos.ToGrayScale();
-    imgaos.ApplyGaussianBlur();
+    // imgaos.ApplyGaussianBlur();
 
     // BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
 
@@ -19,7 +19,7 @@ int main () {
     //     std::cout << "Pixel " << i << ": " << std::to_string(bmpPixelsData[0][i].red) << " " << std::to_string(bmpPixelsData[0][i].green) << " " << std::to_string(bmpPixelsData[0][i].blue) << std::endl;
     // }
 
-    imgaos.WriteBitmapFile("../images/balloon-blur.bmp");
+    // imgaos.WriteBitmapFile("../images/balloon-mono.bmp");
 
     return 0;
 }

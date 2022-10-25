@@ -10,10 +10,10 @@ int main (int argc, char *argv[]) {
     Parser parser = parseArgs(argv[1], argv[2], argv[3]);
     if(parser.operationNum == -1) return -1;
 
-    ImageAOS imgaos;
     int loadTime = 0, operationTime = 0, storeTime = 0;
     std::vector<int> times;
     for (std::string file : parser.filenames) {
+        ImageAOS imgaos;
         std::string inputFilePath = parser.inputDir + "/" + file + ".bmp";
         std::string outputFilePath;
 

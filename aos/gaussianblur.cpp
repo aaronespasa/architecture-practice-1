@@ -22,7 +22,7 @@ int ImageAOS::ApplyGaussianBlur() {
         {1, 4, 7, 4, 1}
     };
 
-    float w = 273.0;
+    int w = 273;
 
     // 1. Copy the original image (bmpPixelsData) to a new image called temporalPixelsForConvolution &
     //    resize temporalPixelsForConvolution to be 4 pixels bigger in each side and fill it with 0s.
@@ -46,9 +46,9 @@ int ImageAOS::ApplyGaussianBlur() {
                     red += temporalPixelsForConvolution[i+s][j+t].red * kernel[s+2][t+2];
                 }
             }
-            bmpPixelsData[i-2][j-2].blue = floor(blue/w + 0.5);
-            bmpPixelsData[i-2][j-2].green = floor(green/w + 0.5);
-            bmpPixelsData[i-2][j-2].red = floor(red/w + 0.5);
+            bmpPixelsData[i-2][j-2].blue = blue/w;
+            bmpPixelsData[i-2][j-2].green = green/w;
+            bmpPixelsData[i-2][j-2].red = red/w;
         }
     }
 

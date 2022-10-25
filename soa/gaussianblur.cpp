@@ -22,7 +22,7 @@ int ImageSOA::ApplyGaussianBlur() {
         {1, 4, 7, 4, 1}
     };
 
-    float w = 273.0;
+    int w = 273;
 
     // 1. Copy the original image (bmpPixelsData) to a new image called temporalPixelsForConvolution &
     //    resize temporalPixelsForConvolution to be 4 pixels bigger in each side and fill it with 0s.
@@ -53,9 +53,9 @@ int ImageSOA::ApplyGaussianBlur() {
                     red += temporalPixelsForConvolution.red[i+s][j+t] * kernel[s+2][t+2];
                 }
             }
-            bmpPixelsData.blue[i-2][j-2] = floor(blue/w + 0.5);
-            bmpPixelsData.green[i-2][j-2] = floor(green/w + 0.5);
-            bmpPixelsData.red[i-2][j-2] = floor(red/w + 0.5);
+            bmpPixelsData.blue[i-2][j-2] = blue/w;
+            bmpPixelsData.green[i-2][j-2] = green/w;
+            bmpPixelsData.red[i-2][j-2] = red/w;
         }
     }
 

@@ -76,9 +76,9 @@ PixelNormalized correccion_gamma ( PixelNormalized& mypixel ) {
 Pixel Denormalize( PixelNormalized& mypixel ) {
     Pixel new_pixel;
     mypixel.gray = mypixel.gray * 255;
-    new_pixel.blue = floor(mypixel.gray + 0.5);
-    new_pixel.green = floor(mypixel.gray + 0.5);
-    new_pixel.red = floor(mypixel.gray + 0.5);
+    new_pixel.blue = mypixel.gray;
+    new_pixel.green = mypixel.gray;
+    new_pixel.red = mypixel.gray;
 
     return new_pixel;
 }

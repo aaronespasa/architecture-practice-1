@@ -19,9 +19,8 @@ int ImageSOA::GenerateHistogram(std::string filename) {
         }
     }
     
-    for(int i = 1; i < 769; i++) {
-        histogram << histogramValues[i-1] << " ";
-        if(i % 256 == 0) histogram << std::endl;   
+    for(int i = 0; i < 768; i++) {
+        histogram << histogramValues[i-1] << std::endl;
     }
 
     histogram.close();

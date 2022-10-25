@@ -50,7 +50,7 @@ float correccion_gamma ( float& mypixel ) {
 //This function is used to denormalize the pixel value
 uint8_t Denormalize(float& mypixel_gray) {
     mypixel_gray = mypixel_gray * 255;
-    return floor(mypixel_gray + 0.5);
+    return mypixel_gray;
 }
 
 int ImageSOA::ToGrayScale() {

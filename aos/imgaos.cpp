@@ -5,22 +5,47 @@
 #include "../common/common.h"
 #include "aos.h"
 
-int main () {
+int main (int argc, char *argv[]) {
+    if(!checkArgCount(argc)) return -1;
+    Parser parser = parseArgs(argv[1], argv[2], argv[3]);
+    if(parser.operationNum == -1) return -1;
+
     ImageAOS imgaos;
+    int loadTime = 0, operationTime = 0, storeTime = 0;
+    std::vector<int> times;
+    for (std::string file : parser.filenames) {
+        std::string inputFilePath = parser.inputDir + "/" + file + ".bmp";
+        std::string outputFilePath;
 
-    imgaos.CopyBitmapFile("../images/balloon.bmp", "../images/balloon_copy.bmp");
-    // imgaos.ReadBitmapFile("../images/balloon.bmp");
-    // imgaos.GenerateHistogram("../histograms/ballon.hst");
-    // imgaos.ToGrayScale();
-    // imgaos.ApplyGaussianBlur();
-
-    // BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
-
-    // for (int i = 0; i < 5; i++) {
-    //     std::cout << "Pixel " << i << ": " << std::to_string(bmpPixelsData[0][i].red) << " " << std::to_string(bmpPixelsData[0][i].green) << " " << std::to_string(bmpPixelsData[0][i].blue) << std::endl;
-    // }
-
-    // imgaos.WriteBitmapFile("../images/balloon-mono.bmp");
+        switch (parser.operationNum) {
+            case 0:
+                outputFilePath = parser.outputDir + "/" + file + ".bmp";
+                times = imgaos.CopyBitmapFile(inputFilePath, outputFilePath);
+                loadTime = times[0], storeTime = times[1];
+                printTime(inputFilePath, "Copy", loadTime, operationTime, storeTime);
+                break;
+            case 1:
+                outputFilePath = parser.outputDir + "/" + file + ".hst";
+                loadTime = imgaos.ReadBitmapFile(inputFilePath);
+                operationTime = imgaos.GenerateHistogram(outputFilePath);
+                printTime(inputFilePath, "Histo", loadTime, operationTime, storeTime);
+                break;
+            case 2:
+                outputFilePath = parser.outputDir + "/" + file + ".bmp";
+                loadTime = imgaos.ReadBitmapFile(inputFilePath);
+                operationTime = imgaos.ToGrayScale();
+                storeTime = imgaos.WriteBitmapFile(outputFilePath);
+                printTime(inputFilePath, "Mono", loadTime, operationTime, storeTime);
+                break;
+            case 3:
+                outputFilePath = parser.outputDir + "/" + file + ".bmp";
+                loadTime = imgaos.ReadBitmapFile(inputFilePath);
+                operationTime = imgaos.ApplyGaussianBlur();
+                storeTime = imgaos.WriteBitmapFile(outputFilePath);
+                printTime(inputFilePath, "Gauss", loadTime, operationTime, storeTime);
+                break;
+        }
+    }
 
     return 0;
 }

@@ -3,11 +3,14 @@
 #include <string>
 #include <vector>
 #include <stdint.h>
+#include <chrono>
 
 #include "aos.h"
 #include "../common/common.h"
 
-void ImageAOS::ReadBitmapFile(std::string filename) {
+int ImageAOS::ReadBitmapFile(std::string filename) {
+    auto start = std::chrono::high_resolution_clock::now();
+
     // Create a file-reading object to read the bitmap file
     std::ifstream bmpFile(filename.c_str(), std::ios::in | std::ios::binary);
 
@@ -43,9 +46,13 @@ void ImageAOS::ReadBitmapFile(std::string filename) {
 
     /* 3. Close the file and return the vector of pixels */
     bmpFile.close();
+
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
 }
 
-void ImageAOS::WriteBitmapFile(std::string filename) {
+int ImageAOS::WriteBitmapFile(std::string filename) {
+    auto start = std::chrono::high_resolution_clock::now();
+
     // Create a file-writing object to write the bitmap file
     std::ofstream bmpFile(filename.c_str(), std::ios::out | std::ios::binary);
 
@@ -70,11 +77,14 @@ void ImageAOS::WriteBitmapFile(std::string filename) {
 
     /* 3. Close the file */
     bmpFile.close();
+
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
 }
 
-void ImageAOS::CopyBitmapFile(string source, string destination) {
-    ReadBitmapFile(source);
-    WriteBitmapFile(destination);
+std::vector<int> ImageAOS::CopyBitmapFile(string source, string destination) {
+    int loadTime = ReadBitmapFile(source);
+    int storeTime = WriteBitmapFile(destination);
+    return {loadTime, storeTime};
 }
 
 BmpPixels ImageAOS::GetBitmapPixelsData() {

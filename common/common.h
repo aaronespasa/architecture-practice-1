@@ -2,8 +2,22 @@
 #define COMMON_H
 
 #include <stdint.h>
+#include <string>
+#include <vector>
 
-// using namespace std;
+struct Parser {
+    int operationNum{-1};
+    std::string inputDir = "";
+    std::string outputDir = "";
+    std::vector<std::string> filenames = {};
+};
+
+bool checkArgCount(int argc);
+int checkOperation(const std::string& operation);
+bool checkDirectories(const std::string& inputDir, const std::string& outputDir);
+std::vector<std::string> getFiles(const std::string& inputDir);
+Parser parseArgs(const std::string &inputDir, const std::string &outputDir, const std::string &operation);
+void printTime(const std::string &inputFilePath, const std::string &operation, int loadTime, int operationTime, int storeTime);
 
 struct BMPHeader {
     uint16_t type{0x4D42};

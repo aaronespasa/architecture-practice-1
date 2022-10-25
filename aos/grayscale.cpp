@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
 
 #include "aos.h"
 #include <cmath>
@@ -83,7 +84,9 @@ Pixel Denormalize( PixelNormalized& mypixel ) {
 }
 
 
-void ImageAOS::ToGrayScale() {
+int ImageAOS::ToGrayScale() {
+    auto start = std::chrono::high_resolution_clock::now();
+
     vector<vector<PixelNormalized>> bmpPixelsDataNormalized(bmpPixelsData.size(), vector<PixelNormalized>(bmpPixelsData[0].size()));
 
     //Read all pixels and convert them to grayscale
@@ -98,4 +101,6 @@ void ImageAOS::ToGrayScale() {
 
         }
     }
+
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
 }

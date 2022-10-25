@@ -8,3 +8,4 @@ build/
 
 # Test images
 images/test/
+imagesOut/

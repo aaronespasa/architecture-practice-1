@@ -1,11 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <chrono>
 
 #include "aos.h"
 #include "../common/common.h"
 
-void ImageAOS::GenerateHistogram(std::string filename) {
+int ImageAOS::GenerateHistogram(std::string filename) {
+    auto start = std::chrono::high_resolution_clock::now();
     std::ofstream histogram(filename.c_str());
     std::vector<int> histogramValues(768, 0);
 
@@ -23,4 +25,5 @@ void ImageAOS::GenerateHistogram(std::string filename) {
     }
 
     histogram.close();
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
 }

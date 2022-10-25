@@ -1,8 +1,9 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
+#include <chrono>
 
 #include "soa.h"
-#include <cmath>
 
 using namespace std;
 
@@ -52,7 +53,9 @@ uint8_t Denormalize(float& mypixel_gray) {
     return floor(mypixel_gray + 0.5);
 }
 
-void ImageSOA::ToGrayScale() {
+int ImageSOA::ToGrayScale() {
+    auto start = std::chrono::high_resolution_clock::now();
+
     PixelNormalized bmpPixelsDataNormalized;
     bmpPixelsDataNormalized.blue.resize(bmpPixelsData.blue.size(), vector<float>(bmpPixelsData.blue[0].size()));
     bmpPixelsDataNormalized.green.resize(bmpPixelsData.green.size(), vector<float>(bmpPixelsData.green[0].size()));
@@ -79,4 +82,6 @@ void ImageSOA::ToGrayScale() {
             bmpPixelsData.red[i][j] = pixel_gray;
         }
     }
+
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
 }

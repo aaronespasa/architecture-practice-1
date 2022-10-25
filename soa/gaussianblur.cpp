@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include <stdint.h>
+#include <chrono>
 
 #include "../common/common.h"
 #include "soa.h"
@@ -10,7 +11,9 @@
 using namespace std;
 
 
-void ImageSOA::ApplyGaussianBlur() {
+int ImageSOA::ApplyGaussianBlur() {
+    auto start = std::chrono::high_resolution_clock::now();
+
     uint8_t kernel[5][5] = {
         {1, 4, 7, 4, 1},
         {4, 16, 26, 16, 4},
@@ -56,4 +59,5 @@ void ImageSOA::ApplyGaussianBlur() {
         }
     }
 
+    return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
 }

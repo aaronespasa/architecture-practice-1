@@ -17,12 +17,12 @@ struct BmpPixels {
 
 class ImageSOA {
     public:
-        void ReadBitmapFile(string filename);
-        void WriteBitmapFile(string filename);
-        void CopyBitmapFile(string source, string destination);
-        void GenerateHistogram(string filename);
-        void ToGrayScale();
-        void ApplyGaussianBlur();
+        int ReadBitmapFile(string filename);
+        int WriteBitmapFile(string filename);
+        std::vector<int> CopyBitmapFile(string source, string destination);
+        int GenerateHistogram(string filename);
+        int ToGrayScale();
+        int ApplyGaussianBlur();
 
         BmpPixels GetBitmapPixelsData();
     private:

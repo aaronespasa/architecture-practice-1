@@ -16,6 +16,7 @@ void checkGaussianBlurTest1() {
     applying Gaussian Blur*/
     ImageAOS imgaos;
     imgaos.ReadBitmapFile("../images/balloon.bmp");
+    BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
     long unsigned int size_before = bmpPixelsData.size();
     imgaos.ApplyGaussianBlur();
     long unsigned int size_after = bmpPixelsData.size();

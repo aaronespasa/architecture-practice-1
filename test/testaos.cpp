@@ -2,25 +2,44 @@
 #include <iostream>
 #include "../common/common.h"
 #include "../aos/aos.h"
+
 /* #include "../aos/grayscale.cpp" */
 
-// void checkGaussianBlurTest1() {
-//     /*Test if the size of the bmp is equal before and after
-//     applying Gaussian Blur*/
-//     ImageAOS imgaos;
-//     imgaos.ReadBitmapFile("../images/balloon.bmp");
-//     BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
-//     long unsigned int size_before = bmpPixelsData.size();
-//     imgaos.ApplyGaussianBlur();
-//     long unsigned int size_after = bmpPixelsData.size();
+  TEST(checkCopy,size) {
+     /*Test if the size of the bmp is equal before and after
+     applying Copy*/
+     ImageAOS imgaos;
+     imgaos.ReadBitmapFile("../images/balloon.bmp");
+     BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
+     long unsigned int size_before = bmpPixelsData.size();
+     BmpPixels bmpPixelsDataCopy 
+     imgaos.CopyBitmapFile(bmpPixelsData,bmpPixelsDataCopy );
+     long unsigned int size_after = bmpPixelsDataCopy.size();
 
-//     if (size_before == size_after) {
-//         std::cout << "Gaussian Blur test 1 passed" << std::endl;
-//     }
-//     else {
-//         std::cout << "Gaussian Blur test 1 failed" << std::endl;
-//     }
-// }
+     EXPECT_EQ(size_before, size_after);
+     for (long unsigned int i = 0; i < bmpPixelsData.size(); i++) {
+            for (long unsigned int j = 0; j < bmpPixelsData[0].size(); j++) {
+                EXPECT_EQ(bmpPixelsData[i][j].blue, bmpPixelsDataCopy[i][j].blue);
+                EXPECT_EQ(bmpPixelsData[i][j].green, bmpPixelsDataCopy[i][j].green);
+                EXPECT_EQ(bmpPixelsData[i][j].red, bmpPixelsDataCopy[i][j].red);
+            }
+        }
+
+ }
+    
+ TEST(checkGaussianBlur,size) {
+     /*Test if the size of the bmp is equal before and after
+     applying Gaussian Blur*/
+     ImageAOS imgaos;
+     imgaos.ReadBitmapFile("../images/balloon.bmp");
+     BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
+     long unsigned int size_before = bmpPixelsData.size();
+     imgaos.ApplyGaussianBlur();
+     long unsigned int size_after = bmpPixelsData.size();
+
+     EXPECT_EQ(size_before, size_after);
+ }
+
 
 
 

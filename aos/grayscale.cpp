@@ -28,40 +28,38 @@ PixelNormalized Normalize( Pixel& mypixel  ) {
 
 //This function is used to correct the linear intensity of the pixel
 PixelNormalized Intensidad_lineal ( PixelNormalized& mypixel ) {
+    PixelNormalized pixelNormalized;
     if (mypixel.blue  <= 0.04045) {
-        mypixel.blue = mypixel.blue / 12.92;
+        pixelNormalized.blue = mypixel.blue / 12.92;
     } else {
-        mypixel.blue = std::pow(((mypixel.blue + 0.055) / 1.055), 2.4);
+        pixelNormalized.blue = std::pow(((mypixel.blue + 0.055) / 1.055), 2.4);
     }
 
     if(mypixel.green  <= 0.04045){
-        mypixel.green = mypixel.green / 12.92;
+        pixelNormalized.green = mypixel.green / 12.92;
     } else {
-        mypixel.green = std::pow(((mypixel.green + 0.055) / 1.055), 2.4);
+        pixelNormalized.green = std::pow(((mypixel.green + 0.055) / 1.055), 2.4);
     }
             
     if(mypixel.red  <= 0.04045){
-        mypixel.red = mypixel.red / 12.92;
+        pixelNormalized.red = mypixel.red / 12.92;
     } else {
-        mypixel.red = std::pow(((mypixel.red + 0.055) / 1.055), 2.4);
+        pixelNormalized.red = std::pow(((mypixel.red + 0.055) / 1.055), 2.4);
     }
 
-    return mypixel;        
+    return pixelNormalized;
 }
 
 //This function converges the 3 values of the pixel to a single value(gray)
 
-PixelNormalized Transformacion_lineal( PixelNormalized& mypixel ) {
-    
-    mypixel.gray = 0.2126 * mypixel.blue + 0.7152 * mypixel.green + 0.0722 * mypixel.red;
-    
+PixelNormalized Transformacion_lineal( PixelNormalized mypixel ) {
+    mypixel.gray = 0.2126 * mypixel.red + 0.7152 * mypixel.green + 0.0722 * mypixel.blue;
     return mypixel;
-
 }
 
 //This function is used to apply the gamma correction of the pixel
 
-PixelNormalized correccion_gamma ( PixelNormalized& mypixel ) {
+PixelNormalized correccion_gamma ( PixelNormalized mypixel ) {
     if (mypixel.gray  <= 0.0031308) {
         mypixel.gray = mypixel.gray * 12.92;
     }

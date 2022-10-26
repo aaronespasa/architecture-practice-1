@@ -33,7 +33,7 @@ float Intensidad_lineal ( float& mypixel ) {
 //This function converges the 3 values of the pixel to a single value(gray)
 
 float Transformacion_lineal( float& mypixel_red, float& mypixel_green, float& mypixel_blue) {
-    return 0.2126 * mypixel_blue + 0.7152 * mypixel_green + 0.0722 * mypixel_red;
+    return 0.2126 * mypixel_red + 0.7152 * mypixel_green + 0.0722 * mypixel_blue;
 }
 
 //This function is used to apply the gamma correction of the pixel
@@ -49,8 +49,7 @@ float correccion_gamma ( float& mypixel ) {
 
 //This function is used to denormalize the pixel value
 uint8_t Denormalize(float& mypixel_gray) {
-    mypixel_gray = mypixel_gray * 255;
-    return mypixel_gray;
+    return mypixel_gray * 255;
 }
 
 int ImageSOA::ToGrayScale() {

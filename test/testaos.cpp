@@ -1,6 +1,9 @@
 #include <iostream>
 #include "../common/common.h"
 #include "../aos/aos.h"
+#include "gtest/gtest.h" 
+/* #include "../aos/grayscale.cpp" */
+
 
 void checkReadAndWriteTest1() {
     // ImageAOS imgaos;
@@ -28,6 +31,24 @@ void checkGaussianBlurTest1() {
         std::cout << "Gaussian Blur test 1 failed" << std::endl;
     }
 }
+void chechGrayScaleTest2() {
+    /*Test if the size of the bmp is equal before and after
+    applying GrayScale*/
+    ImageAOS imgaos;
+    imgaos.ReadBitmapFile("../images/balloon.bmp");
+    BmpPixels bmpPixelsData = imgaos.GetBitmapPixelsData();
+    long unsigned int size_before = bmpPixelsData.size();
+    imgaos.ToGrayScale();
+    long unsigned int size_after = bmpPixelsData.size();
+
+    if (size_before == size_after) {
+        std::cout << "GrayScale test 2 passed" << std::endl;
+    }
+    else {
+        std::cout << "GrayScale test 2 failed" << std::endl;
+    }
+}
+
 
 
 int main() {

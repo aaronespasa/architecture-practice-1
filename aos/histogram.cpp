@@ -20,7 +20,7 @@ int ImageAOS::GenerateHistogram(std::string filename) {
     }
     
     for(int i = 0; i < 768; i++) {
-        histogram << histogramValues[i-1] << std::endl;
+        histogram << histogramValues[i] << std::endl;
     }
 
     histogram.close();

@@ -19,6 +19,8 @@ class ImageSOA {
     public:
         int ReadBitmapFile(string filename);
         int WriteBitmapFile(string filename);
+        void ReadBitmapHeader(BmpHeaderContainer header);
+        void WriteBitmapHeader(std::string filename);
         std::vector<int> CopyBitmapFile(string source, string destination);
         int GenerateHistogram(string filename);
         int ToGrayScale();

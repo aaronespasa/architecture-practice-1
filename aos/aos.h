@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <string>
+#include <fstream>
 #include <vector>
 #include <stdint.h>
 
@@ -21,6 +22,8 @@ typedef vector<vector<Pixel>> BmpPixels;
 class ImageAOS {
     public:
         int ReadBitmapFile(string filename);
+        void ReadBitmapHeader(BmpHeaderContainer header);
+        void WriteBitmapHeader(std::string filename);
         int WriteBitmapFile(string filename);
         std::vector<int> CopyBitmapFile(string source, string destination);
         int GenerateHistogram(string filename);

@@ -25,6 +25,8 @@ std::vector<std::string> getFiles(const std::string& inputDir);
 Parser parseArgs(const std::string &inputDir, const std::string &outputDir, const std::string &operation);
 void printTime(const std::string &inputFilePath, const std::string &operation, Times times);
 
+typedef uint8_t BmpHeaderContainer[54];
+
 struct BMPHeader {
     uint16_t type{0x4D42};
     uint32_t file_size{0};
@@ -41,7 +43,7 @@ struct BMPHeader {
     int32_t y_pixels_per_meter{0};
     uint32_t colors_used{0};
     uint32_t colors_important{0};
-} __attribute__((packed)); // to avoid padding
+};
 
 void checkBMPHeader(BMPHeader &header);
 

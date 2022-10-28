@@ -8,10 +8,10 @@
 using namespace std;
 
 struct PixelNormalized {
-    float blue;
-    float green;
-    float red;
-    float gray;
+    double blue;
+    double green;
+    double red;
+    double gray;
 };
 
 //This function is used to normalize the pixel values

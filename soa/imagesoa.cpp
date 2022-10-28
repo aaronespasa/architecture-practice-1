@@ -22,15 +22,17 @@ int ImageSOA::ReadBitmapFile(std::string filename) {
     }
 
     // Read the bitmap file header
-    bmpFile.read((char *)&bmpHeader, sizeof(BMPHeader));
+    bmpFile.read(reinterpret_cast<char*>(&bmpHeader), sizeof(BMPHeader));
 
     // Check if the file is a bitmap file
     checkBMPHeader(bmpHeader);
 
-    /* 2. Read the bitmap pixels and store them in a vector of pixels */
-    bmpFile.seekg(bmpHeader.offset_data);
+    extraHeaderInformation.resize(bmpHeader.offset_data - sizeof(BMPHeader));
+    for (long unsigned int i = 0; i < bmpHeader.offset_data - sizeof(BMPHeader); i++) {
+        bmpFile.read(reinterpret_cast<char *>(&extraHeaderInformation[i]), 1);
+    }
 
-    // Iterate over the rows of the bitmap
+    /* 2. Read the bitmap pixels and store them in a vector of pixels */
     uint8_t blue = 0, green = 0, red = 0;
     bmpPixelsData.blue.resize(bmpHeader.height, std::vector<uint8_t>(bmpHeader.width));
     bmpPixelsData.green.resize(bmpHeader.height, std::vector<uint8_t>(bmpHeader.width));
@@ -38,9 +40,9 @@ int ImageSOA::ReadBitmapFile(std::string filename) {
     for (int i = 0; i < bmpHeader.height; i++) {
         // Fill the vector with the pixels of the row
         for(int j = 0; j < bmpHeader.width; j++) {
-            bmpFile.read((char *) &blue, sizeof(blue));
-            bmpFile.read((char *) &green, sizeof(green));
-            bmpFile.read((char *) &red, sizeof(red));
+            bmpFile.read(reinterpret_cast<char*>(&blue), sizeof(blue));
+            bmpFile.read(reinterpret_cast<char*>(&green), sizeof(green));
+            bmpFile.read(reinterpret_cast<char*>(&red), sizeof(red));
             bmpPixelsData.blue[i][j] = blue;
             bmpPixelsData.green[i][j] = green;
             bmpPixelsData.red[i][j] = red;
@@ -63,24 +65,26 @@ int ImageSOA::WriteBitmapFile(std::string filename) {
     std::ofstream bmpFile(filename.c_str(), std::ios::out | std::ios::binary);
 
     /* 1. Write the bitmap file header and info header */
-    bmpFile.write((char *)&bmpHeader, sizeof(BMPHeader));
+    bmpFile.write(reinterpret_cast<const char*>(&bmpHeader), sizeof(BMPHeader));
 
+    for (long unsigned int i = 0; i < bmpHeader.offset_data - sizeof(BMPHeader); i++) {
+        bmpFile.write(reinterpret_cast<const char *>(&extraHeaderInformation[i]), 1);
+    }
+
+    char paddingValue = 0;
+    int padding_length = bmpHeader.width % 4;
     /* 2. Write the bitmap pixels */
-    bmpFile.seekp(bmpHeader.offset_data);
-
-    // Iterate over the rows of the bitmap
     for (int i = 0; i < bmpHeader.height; i++) {
         // Write the pixels of the row
         for(int j = 0; j < bmpHeader.width; j++) {
-            bmpFile.write((char *)&bmpPixelsData.blue[i][j], sizeof(uint8_t));
-            bmpFile.write((char *)&bmpPixelsData.green[i][j], sizeof(uint8_t));
-            bmpFile.write((char *)&bmpPixelsData.red[i][j], sizeof(uint8_t));
+            bmpFile.write(reinterpret_cast<const char*>(&bmpPixelsData.blue[i][j]), sizeof(uint8_t));
+            bmpFile.write(reinterpret_cast<const char*>(&bmpPixelsData.green[i][j]), sizeof(uint8_t));
+            bmpFile.write(reinterpret_cast<const char*>(&bmpPixelsData.red[i][j]), sizeof(uint8_t));
         }
 
         // Write the padding bytes. Each row must be a multiple of 4 bytes.
-        int padding = bmpHeader.width % 4;
-        for (int j = 0; j < padding; j++) {
-            bmpFile.write((char *) &padding, 1);
+        for (int j = 0; j < padding_length; j++) {
+            bmpFile.write(reinterpret_cast<const char *>(&paddingValue), 1);
         }
     }
 

@@ -27,6 +27,7 @@ class ImageSOA {
         BmpPixels GetBitmapPixelsData();
     private:
         BMPHeader bmpHeader;
+        std::vector<unsigned char> extraHeaderInformation;
         BmpPixels bmpPixelsData;
 };
 

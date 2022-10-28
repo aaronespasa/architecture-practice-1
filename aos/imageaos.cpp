@@ -70,8 +70,6 @@ int ImageAOS::WriteBitmapFile(std::string filename) {
     }
 
     /* 2. Write the bitmap pixels */
-    // bmpFile.seekp(bmpHeader.offset_data);
-
     char paddingValue = 0;
     int padding_length = bmpHeader.width % 4;
     // Iterate over the rows of the bitmap

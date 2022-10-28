@@ -88,16 +88,16 @@ Parser parseArgs(const std::string &inputDir, const std::string &outputDir, cons
     return parser;
 }
 
-void printTime(const std::string &inputFilePath, const std::string& operation, int loadTime, int operationTime, int storeTime) {
-    int totalTime = loadTime + operationTime + storeTime;
+void printTime(const std::string &inputFilePath, const std::string& operation, Times timeStruct) {
+    int totalTime = timeStruct.loadTime + timeStruct.operationTime + timeStruct.storeTime;
     std::cout << "File: \"" << inputFilePath << "\"(time: " << totalTime << ")" << std::endl;
-    if (loadTime > 0) {
-        std::cout << "  Load time: " << loadTime << std::endl;
+    if (timeStruct.loadTime > 0) {
+        std::cout << "  Load time: " << timeStruct.loadTime << std::endl;
     }
-    if (operationTime > 0) {
-        std::cout << "  " << operation << " time: " << operationTime << std::endl;
+    if (timeStruct.operationTime > 0) {
+        std::cout << "  " << operation << " time: " << timeStruct.operationTime << std::endl;
     }
-    if (storeTime > 0) {
-        std::cout << "  Store time: " << storeTime << std::endl;
+    if (timeStruct.storeTime > 0) {
+        std::cout << "  Store time: " << timeStruct.storeTime << std::endl;
     }
 }

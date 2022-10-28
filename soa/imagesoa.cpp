@@ -10,72 +10,46 @@
 
 int ImageSOA::ReadBitmapFile(std::string filename) {
     auto start = std::chrono::high_resolution_clock::now();
-
-    // Create a file-reading object to read the bitmap file
     std::ifstream bmpFile(filename.c_str(), std::ios::in | std::ios::binary);
+    if (!bmpFile) throw std::runtime_error("File not found"); // // Check if the file has been found
 
-    /* 1. Read the bitmap file header */
-
-    // Check if the file has been found
-    if (!bmpFile) {
-        throw std::runtime_error("File not found");
-    }
-
-    // Read the bitmap file header
     bmpFile.read(reinterpret_cast<char*>(&bmpHeader), sizeof(BMPHeader));
-
-    // Check if the file is a bitmap file
     checkBMPHeader(bmpHeader);
 
     extraHeaderInformation.resize(bmpHeader.offset_data - sizeof(BMPHeader));
-    for (long unsigned int i = 0; i < bmpHeader.offset_data - sizeof(BMPHeader); i++) {
+    for (long unsigned int i = 0; i < bmpHeader.offset_data - sizeof(BMPHeader); i++)
         bmpFile.read(reinterpret_cast<char *>(&extraHeaderInformation[i]), 1);
-    }
 
-    /* 2. Read the bitmap pixels and store them in a vector of pixels */
     uint8_t blue = 0, green = 0, red = 0;
     bmpPixelsData.blue.resize(bmpHeader.height, std::vector<uint8_t>(bmpHeader.width));
     bmpPixelsData.green.resize(bmpHeader.height, std::vector<uint8_t>(bmpHeader.width));
     bmpPixelsData.red.resize(bmpHeader.height, std::vector<uint8_t>(bmpHeader.width));
     for (int i = 0; i < bmpHeader.height; i++) {
-        // Fill the vector with the pixels of the row
         for(int j = 0; j < bmpHeader.width; j++) {
             bmpFile.read(reinterpret_cast<char*>(&blue), sizeof(blue));
             bmpFile.read(reinterpret_cast<char*>(&green), sizeof(green));
             bmpFile.read(reinterpret_cast<char*>(&red), sizeof(red));
-            bmpPixelsData.blue[i][j] = blue;
-            bmpPixelsData.green[i][j] = green;
-            bmpPixelsData.red[i][j] = red;
+            bmpPixelsData.blue[i][j] = blue; bmpPixelsData.green[i][j] = green; bmpPixelsData.red[i][j] = red;
         }
-
-        // Skip the padding bytes. Each row must be a multiple of 4 bytes.
-        bmpFile.seekg(bmpHeader.width % 4, std::ios_base::cur);
+        bmpFile.seekg(bmpHeader.width % 4, std::ios_base::cur); // Skip the padding bytes
     }
-
-    /* 3. Close the file and return the vector of pixels */
     bmpFile.close();
-
     return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
 }
 
 int ImageSOA::WriteBitmapFile(std::string filename) {
     auto start = std::chrono::high_resolution_clock::now();
-
-    // Create a file-writing object to write the bitmap file
     std::ofstream bmpFile(filename.c_str(), std::ios::out | std::ios::binary);
 
     /* 1. Write the bitmap file header and info header */
     bmpFile.write(reinterpret_cast<const char*>(&bmpHeader), sizeof(BMPHeader));
-
-    for (long unsigned int i = 0; i < bmpHeader.offset_data - sizeof(BMPHeader); i++) {
+    for (long unsigned int i = 0; i < bmpHeader.offset_data - sizeof(BMPHeader); i++)
         bmpFile.write(reinterpret_cast<const char *>(&extraHeaderInformation[i]), 1);
-    }
 
-    char paddingValue = 0;
-    int padding_length = bmpHeader.width % 4;
     /* 2. Write the bitmap pixels */
+    char paddingValue = 0; // padding is made of 0s
+    int padding_length = bmpHeader.width % 4;
     for (int i = 0; i < bmpHeader.height; i++) {
-        // Write the pixels of the row
         for(int j = 0; j < bmpHeader.width; j++) {
             bmpFile.write(reinterpret_cast<const char*>(&bmpPixelsData.blue[i][j]), sizeof(uint8_t));
             bmpFile.write(reinterpret_cast<const char*>(&bmpPixelsData.green[i][j]), sizeof(uint8_t));
@@ -87,10 +61,7 @@ int ImageSOA::WriteBitmapFile(std::string filename) {
             bmpFile.write(reinterpret_cast<const char *>(&paddingValue), 1);
         }
     }
-
-    /* 3. Close the file */
     bmpFile.close();
-
     return std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - start).count();
 }
 

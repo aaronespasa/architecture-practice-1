@@ -12,12 +12,18 @@ struct Parser {
     std::vector<std::string> filenames = {};
 };
 
+struct Times {
+    long unsigned int loadTime{0};
+    long unsigned int operationTime{0};
+    long unsigned int storeTime{0};
+};
+
 bool checkArgCount(int argc);
 int checkOperation(const std::string& operation);
 bool checkDirectories(const std::string& inputDir, const std::string& outputDir);
 std::vector<std::string> getFiles(const std::string& inputDir);
 Parser parseArgs(const std::string &inputDir, const std::string &outputDir, const std::string &operation);
-void printTime(const std::string &inputFilePath, const std::string &operation, int loadTime, int operationTime, int storeTime);
+void printTime(const std::string &inputFilePath, const std::string &operation, Times times);
 
 struct BMPHeader {
     uint16_t type{0x4D42};

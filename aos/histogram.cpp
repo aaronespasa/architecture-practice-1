@@ -13,12 +13,13 @@ int ImageAOS::GenerateHistogram(std::string filename) {
 
     for (long unsigned int i = 0; i < bmpPixelsData.size(); i++) {
         for (long unsigned int j = 0; j < bmpPixelsData[0].size(); j++) {
-            histogramValues[bmpPixelsData[i][j].red]++;
-            histogramValues[bmpPixelsData[i][j].green + 256]++;
-            histogramValues[bmpPixelsData[i][j].blue + 512]++;
+            histogramValues[bmpPixelsData[i][j].red]++; // first 256 values will be red
+            histogramValues[bmpPixelsData[i][j].green + 256]++; // next 256 values will be green
+            histogramValues[bmpPixelsData[i][j].blue + 512]++; // last 256 values will be blue
         }
     }
     
+    // as the values are in order, we just need one for loop
     for(int i = 0; i < 768; i++) {
         histogram << histogramValues[i] << std::endl;
     }

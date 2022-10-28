@@ -96,7 +96,6 @@ int ImageAOS::ToGrayScale() {
             bmpPixelsDataNormalized[i][j] = Transformacion_lineal(bmpPixelsDataNormalized[i][j]);
             bmpPixelsDataNormalized[i][j] = correccion_gamma(bmpPixelsDataNormalized[i][j]);
             bmpPixelsData[i][j] = Denormalize(bmpPixelsDataNormalized[i][j]);
-
         }
     }
 

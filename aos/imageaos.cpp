@@ -15,7 +15,6 @@ int ImageAOS::ReadBitmapFile(std::string filename) {
 
     bmpFile.read(reinterpret_cast<char*>(&bmpHeader), sizeof(BMPHeader)); // Read the header
     checkBMPHeader(bmpHeader);                                            // Check if the file is a bitmap file
-
     extraHeaderInformation.resize(bmpHeader.offset_data - sizeof(BMPHeader)); // extra information until the offset data
     for (long unsigned int i = 0; i < bmpHeader.offset_data - sizeof(BMPHeader); i++)
         bmpFile.read(reinterpret_cast<char *>(&extraHeaderInformation[i]), 1);

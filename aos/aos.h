@@ -30,6 +30,7 @@ class ImageAOS {
         BmpPixels GetBitmapPixelsData();
     private:
         BMPHeader bmpHeader;
+        std::vector<unsigned char> extraHeaderInformation;
         BmpPixels bmpPixelsData;
 };
 

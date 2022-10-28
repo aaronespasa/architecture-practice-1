@@ -8,7 +8,7 @@
 //   TEST(checkCopy,size) {
 //      /*Test if the size of the bmp is equal before and after
 //      applying Copy*/
-//      ImageAOS imgsoa;
+//      ImageSOA imgsoa;
 //      imgsoa.ReadBitmapFile("../images/balloon.bmp");
 //      BmpPixels bmpPixelsData = imgsoa.GetBitmapPixelsData();
 //     //  long unsigned int size_before = bmpPixelsData.size();
@@ -32,12 +32,12 @@
      applying Gaussian Blur*/
      ImageSOA imgsoa;
      imgsoa.ReadBitmapFile("../images/balloon.bmp");
-     BmpPixels bmpPixelsData = imgsoa.GetBitmapPixelsData();
-     long unsigned int size_before = bmpPixelsData.blue.size();
+     BmpPixels bmpPixelsDataOriginal = imgsoa.GetBitmapPixelsData();
      imgsoa.ApplyGaussianBlur();
-     long unsigned int size_after = bmpPixelsData.blue.size();
+     BmpPixels bmpPixelsDataModified = imgsoa.GetBitmapPixelsData();
 
-     EXPECT_EQ(size_before, size_after);
+     EXPECT_EQ(bmpPixelsDataOriginal.blue.size(), bmpPixelsDataModified.blue.size());
+     EXPECT_EQ(bmpPixelsDataOriginal.blue[0].size(), bmpPixelsDataModified.blue[0].size());
  }
 
 
@@ -48,7 +48,7 @@
 // TEST(check_gray_scale, balloon) {
 //    /* We are testing if the file porduced is the expected one by comparing 
 //       the bitmap of the image provided and the bitmap of the image produced  */
-//     ImageAOS imgsoa;
+//     ImageSOA imgsoa;
 //     /* Aqui debe ir la lectura de la imagen de prueba  */
 //     imgsoa.ReadBitmapFile("../images/images_test/gray_scale/balloon.bmp");
 //     BmpPixels bmpPixelsData_test = imgsoa.GetBitmapPixelsData();
@@ -73,7 +73,7 @@
 //  TEST(check_gray_scale, amphora) {
 //     /* We are testing if the file porduced is the expected one by comparing 
 //        the bitmap of the image provided and the bitmap of the image produced  */
-//      ImageAOS imgsoa;
+//      ImageSOA imgsoa;
 //      /* Aqui debe ir la lectura de la imagen de prueba  */
 //      imgsoa.ReadBitmapFile("../images/images_test/gray_scale/amphora.bmp");
 //      BmpPixels bmpPixelsData_test = imgsoa.GetBitmapPixelsData();
@@ -98,7 +98,7 @@
 //  TEST(check_gray_scale, car) {
 //     /* We are testing if the file porduced is the expected one by comparing 
 //        the bitmap of the image provided and the bitmap of the image produced  */
-//      ImageAOS imgsoa;
+//      ImageSOA imgsoa;
 //      /* Aqui debe ir la lectura de la imagen de prueba  */
 //      imgsoa.ReadBitmapFile("../images/images_test/gray_scale/car.bmp");
 //      BmpPixels bmpPixelsData_test = imgsoa.GetBitmapPixelsData();
@@ -123,7 +123,7 @@
 //  TEST(check_gray_scale, elephant) {
 //     /* We are testing if the file porduced is the expected one by comparing 
 //        the bitmap of the image provided and the bitmap of the image produced  */
-//      ImageAOS imgsoa;
+//      ImageSOA imgsoa;
 //      /* Aqui debe ir la lectura de la imagen de prueba  */
 //      imgsoa.ReadBitmapFile("../images/images_test/gray_scale/elephant.bmp");
 //      BmpPixels bmpPixelsData_test = imgsoa.GetBitmapPixelsData();
@@ -148,7 +148,7 @@
 //  TEST(check_gray_scale, landscape) {
 //     /* We are testing if the file porduced is the expected one by comparing 
 //        the bitmap of the image provided and the bitmap of the image produced  */
-//      ImageAOS imgsoa;
+//      ImageSOA imgsoa;
 //      /* Aqui debe ir la lectura de la imagen de prueba  */
 //      imgsoa.ReadBitmapFile("../images/images_test/gray_scale/landscape.bmp");
 //      BmpPixels bmpPixelsData_test = imgsoa.GetBitmapPixelsData();
@@ -173,7 +173,7 @@
 //  TEST(check_gray_scale, plane) {
 //     /* We are testing if the file porduced is the expected one by comparing 
 //        the bitmap of the image provided and the bitmap of the image produced  */
-//      ImageAOS imgsoa;
+//      ImageSOA imgsoa;
 //      /* Aqui debe ir la lectura de la imagen de prueba  */
 //      imgsoa.ReadBitmapFile("../images/images_test/gray_scale/plane.bmp");
 //      BmpPixels bmpPixelsData_test = imgsoa.GetBitmapPixelsData();
@@ -198,7 +198,7 @@
 //  TEST(check_gray_scale, pyramid) {
 //     /* We are testing if the file porduced is the expected one by comparing 
 //        the bitmap of the image provided and the bitmap of the image produced  */
-//      ImageAOS imgsoa;
+//      ImageSOA imgsoa;
 //      /* Aqui debe ir la lectura de la imagen de prueba  */
 //      imgsoa.ReadBitmapFile("../images/images_test/gray_scale/pyramid.bmp");
 //      BmpPixels bmpPixelsData_test = imgsoa.GetBitmapPixelsData();
@@ -222,7 +222,7 @@
 //  TEST(check_gray_scale, snake) {
 //     /* We are testing if the file porduced is the expected one by comparing 
 //        the bitmap of the image provided and the bitmap of the image produced  */
-//      ImageAOS imgsoa;
+//      ImageSOA imgsoa;
 //      /* Aqui debe ir la lectura de la imagen de prueba  */
 //      imgsoa.ReadBitmapFile("../images/images_test/gray_scale/snake.bmp");
 //      BmpPixels bmpPixelsData_test = imgsoa.GetBitmapPixelsData();

@@ -35,6 +35,7 @@
      BmpPixels bmpPixelsDataModified = imgaos.GetBitmapPixelsData();
 
      EXPECT_EQ(bmpPixelsDataOriginal.size(), bmpPixelsDataModified.size());
+     EXPECT_EQ(bmpPixelsDataOriginal[0].size(), bmpPixelsDataModified[0].size());
  }
 
 

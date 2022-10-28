@@ -10,8 +10,8 @@
 /* ----------------------------copy------------------------------------ */
 
 TEST(check_copy_task, all) {
-   /* We are testing if the file porduced is the expected one by comparing 
-      the bitmap of the image provided and the bitmap of the image produced  */
+    /* Check all images are copied correctly by comparing them
+         with the expected ones (those included in the ../images/test/copy folder)*/
     std::string original_images_path = "../images";
     std::vector<std::string> original_images = getFiles(original_images_path);
     std::string transformed_images_path = "../images/test/copy";
@@ -40,8 +40,8 @@ TEST(check_copy_task, all) {
 /* ----------------------------histo------------------------------------ */
 
 TEST(check_histogram_task, all) {
-   /* We are testing if the file porduced is the expected one by comparing 
-      the bitmap of the image provided and the bitmap of the image produced  */
+    /* Check all histograms are generated correctly by comparing them
+         with the expected ones (those included in the ../histograms/test folder)*/
     std::string original_images_path = "../images";
     std::vector<std::string> original_images = getFiles(original_images_path);
     std::string transformed_images_path = "../histograms";
@@ -69,8 +69,8 @@ TEST(check_histogram_task, all) {
 /* ----------------------------grayscale------------------------------------ */
 
 TEST(check_grayscale_task, all) {
-   /* We are testing if the file porduced is the expected one by comparing 
-      the bitmap of the image provided and the bitmap of the image produced  */
+    /* Check all grayscale images are generated correctly by comparing them
+        with the expected ones (those included in the ../images/test/mono folder)*/
     std::string original_images_path = "../images";
     std::vector<std::string> original_images = getFiles(original_images_path);
     std::string transformed_images_path = "../images/test/mono";
@@ -101,8 +101,8 @@ TEST(check_grayscale_task, all) {
 /* ----------------------------gaussian blur------------------------------------ */
 
  TEST(checkGaussianBlur,size) {
-     /*Test if the size of the bmp is equal before and after
-     applying Gaussian Blur*/
+     /* Check if the size of the bitmaps (height & width) is the same
+     before and after applying the gaussian convolution */
      ImageAOS imgaos;
      imgaos.ReadBitmapFile("../images/balloon.bmp");
      BmpPixels bmpPixelsDataOriginal = imgaos.GetBitmapPixelsData();
